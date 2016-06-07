@@ -8,10 +8,24 @@
 
 import Foundation
 import UIKit
+import Firebase
 
-class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
     @IBOutlet weak var tagField: UITextField!
+    
+    @IBOutlet weak var startChatting: UIButton!
+    
+    @IBAction func logOut(sender: UIBarButtonItem) {
+        let firebaseAuth = FIRAuth.auth()
+        do {
+            try firebaseAuth?.signOut()
+            AppState.sharedInstance.signedIn = false
+            performSegueWithIdentifier(Constants.Segues.ToLogIn, sender: nil)
+        } catch let logOutError as NSError {
+            print ("Error logout: \(logOutError)")
+        }
+    }
     
     let trendingTags : [String] = ["Game of thrones","Peaky blinders"]
     
@@ -20,9 +34,14 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     override func viewDidAppear(animated: Bool) {
+        // -- Hide Back Button
         self.navigationItem.setHidesBackButton(true, animated: true)
+        // -- Dissmiss keyboard
+        dismissKeyBoardOnEndEditing()
         // -- Add bottom borders to buttons
         tagField.addBorder(.Bottom, color: UIColor(red: CGFloat(207/255.0), green: CGFloat(207/255.0), blue: CGFloat(207/255.0), alpha: CGFloat(1.0)), width: 2.0)
+        // -- Add border to button
+        self.startChatting.layer.borderColor = UIColor.grayColor().CGColor
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -35,5 +54,27 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.text = trendingTags[indexPath.row]
         
         return cell
+    }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+
+        if textField.text?.characters.count <= 1 {
+            textField.text = "#"
+        }
+        if string.containsString(" ") {
+            let replacedString = string.stringByReplacingOccurrencesOfString(" ", withString: "_", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            
+            print(replacedString)
+            
+            textField.text?.appendContentsOf(replacedString)
+            return false
+        }
+        
+        return true
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        view.endEditing(true)
+        self.view.endEditing(true)
     }
 }

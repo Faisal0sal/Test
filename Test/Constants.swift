@@ -14,7 +14,7 @@ struct Constants {
     
     struct Segues {
         static let LogInTo = "LogInTo"
-        static let FpToSignIn = "FPToSignIn"
+        static let ToLogIn = "ToLogIn"
     }
     
     struct MessageFields {
