@@ -15,12 +15,12 @@
 		023B5C3B1CF07968009BE120 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 023B5C391CF07968009BE120 /* LaunchScreen.storyboard */; };
 		023B5C461CF07968009BE120 /* TestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023B5C451CF07968009BE120 /* TestTests.swift */; };
 		023B5C521CF08CA1009BE120 /* UITextViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023B5C511CF08CA1009BE120 /* UITextViewExtension.swift */; };
-		023B5C541CF21C6C009BE120 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 023B5C531CF21C6C009BE120 /* GoogleService-Info.plist */; };
-		023E74591CF4D9CE00A584D5 /* Chats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E74581CF4D9CE00A584D5 /* Chats.swift */; };
+		023E74591CF4D9CE00A584D5 /* Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E74581CF4D9CE00A584D5 /* Tags.swift */; };
 		023E745B1CF4DA4400A584D5 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E745A1CF4DA4400A584D5 /* Conversation.swift */; };
 		023E74621CF4E5BF00A584D5 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E74611CF4E5BF00A584D5 /* AppState.swift */; };
 		023E74641CF4E6F700A584D5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E74631CF4E6F700A584D5 /* Constants.swift */; };
 		023E74661CF5F76200A584D5 /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E74651CF5F76200A584D5 /* Border.swift */; };
+		024936C71D06DDDD0085DA69 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 024936C61D06DDDD0085DA69 /* GoogleService-Info.plist */; };
 		5EC4E74A8A3AD7D20671B767 /* libPods-Test.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C2B9AF82F32B2BDC6EAC1C9 /* libPods-Test.a */; };
 /* End PBXBuildFile section */
 
@@ -47,12 +47,12 @@
 		023B5C451CF07968009BE120 /* TestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTests.swift; sourceTree = "<group>"; };
 		023B5C471CF07968009BE120 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		023B5C511CF08CA1009BE120 /* UITextViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextViewExtension.swift; sourceTree = "<group>"; };
-		023B5C531CF21C6C009BE120 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		023E74581CF4D9CE00A584D5 /* Chats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chats.swift; sourceTree = "<group>"; };
+		023E74581CF4D9CE00A584D5 /* Tags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tags.swift; sourceTree = "<group>"; };
 		023E745A1CF4DA4400A584D5 /* Conversation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		023E74611CF4E5BF00A584D5 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		023E74631CF4E6F700A584D5 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		023E74651CF5F76200A584D5 /* Border.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Border.swift; sourceTree = "<group>"; };
+		024936C61D06DDDD0085DA69 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0C2B9AF82F32B2BDC6EAC1C9 /* libPods-Test.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Test.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFF0A6B22FBA65332804164E /* Pods-Test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Test.release.xcconfig"; path = "Pods/Target Support Files/Pods-Test/Pods-Test.release.xcconfig"; sourceTree = "<group>"; };
 		E3802DDB6E0EA2D6D46E0644 /* Pods-Test.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Test.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Test/Pods-Test.debug.xcconfig"; sourceTree = "<group>"; };
@@ -104,7 +104,7 @@
 				023B5C501CF08C69009BE120 /* Extensions */,
 				023B5C2D1CF07968009BE120 /* AppDelegate.swift */,
 				023B5C2F1CF07968009BE120 /* Login.swift */,
-				023E74581CF4D9CE00A584D5 /* Chats.swift */,
+				023E74581CF4D9CE00A584D5 /* Tags.swift */,
 				023E745A1CF4DA4400A584D5 /* Conversation.swift */,
 				023E745F1CF4E56100A584D5 /* Supporting Files */,
 			);
@@ -132,12 +132,12 @@
 		023E745F1CF4E56100A584D5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				024936C61D06DDDD0085DA69 /* GoogleService-Info.plist */,
 				023B5C311CF07968009BE120 /* Main.storyboard */,
 				023B5C371CF07968009BE120 /* Assets.xcassets */,
 				023B5C391CF07968009BE120 /* LaunchScreen.storyboard */,
 				023B5C3C1CF07968009BE120 /* Info.plist */,
 				023B5C341CF07968009BE120 /* Test.xcdatamodeld */,
-				023B5C531CF21C6C009BE120 /* GoogleService-Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -255,7 +255,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				023B5C3B1CF07968009BE120 /* LaunchScreen.storyboard in Resources */,
-				023B5C541CF21C6C009BE120 /* GoogleService-Info.plist in Resources */,
+				024936C71D06DDDD0085DA69 /* GoogleService-Info.plist in Resources */,
 				023B5C381CF07968009BE120 /* Assets.xcassets in Resources */,
 				023B5C331CF07968009BE120 /* Main.storyboard in Resources */,
 			);
@@ -330,7 +330,7 @@
 				023B5C2E1CF07968009BE120 /* AppDelegate.swift in Sources */,
 				023B5C361CF07968009BE120 /* Test.xcdatamodeld in Sources */,
 				023B5C521CF08CA1009BE120 /* UITextViewExtension.swift in Sources */,
-				023E74591CF4D9CE00A584D5 /* Chats.swift in Sources */,
+				023E74591CF4D9CE00A584D5 /* Tags.swift in Sources */,
 				023E74641CF4E6F700A584D5 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
