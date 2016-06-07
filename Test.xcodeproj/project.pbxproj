@@ -21,6 +21,7 @@
 		023E74641CF4E6F700A584D5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E74631CF4E6F700A584D5 /* Constants.swift */; };
 		023E74661CF5F76200A584D5 /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E74651CF5F76200A584D5 /* Border.swift */; };
 		024936C71D06DDDD0085DA69 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 024936C61D06DDDD0085DA69 /* GoogleService-Info.plist */; };
+		024936C91D0776200085DA69 /* HashtagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024936C81D0776200085DA69 /* HashtagCell.swift */; };
 		5EC4E74A8A3AD7D20671B767 /* libPods-Test.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C2B9AF82F32B2BDC6EAC1C9 /* libPods-Test.a */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +54,7 @@
 		023E74631CF4E6F700A584D5 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		023E74651CF5F76200A584D5 /* Border.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Border.swift; sourceTree = "<group>"; };
 		024936C61D06DDDD0085DA69 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		024936C81D0776200085DA69 /* HashtagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagCell.swift; sourceTree = "<group>"; };
 		0C2B9AF82F32B2BDC6EAC1C9 /* libPods-Test.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Test.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFF0A6B22FBA65332804164E /* Pods-Test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Test.release.xcconfig"; path = "Pods/Target Support Files/Pods-Test/Pods-Test.release.xcconfig"; sourceTree = "<group>"; };
 		E3802DDB6E0EA2D6D46E0644 /* Pods-Test.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Test.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Test/Pods-Test.debug.xcconfig"; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				023B5C2F1CF07968009BE120 /* Login.swift */,
 				023E74581CF4D9CE00A584D5 /* Tags.swift */,
 				023E745A1CF4DA4400A584D5 /* Conversation.swift */,
+				024936C81D0776200085DA69 /* HashtagCell.swift */,
 				023E745F1CF4E56100A584D5 /* Supporting Files */,
 			);
 			path = Test;
@@ -329,6 +332,7 @@
 				023E74621CF4E5BF00A584D5 /* AppState.swift in Sources */,
 				023B5C2E1CF07968009BE120 /* AppDelegate.swift in Sources */,
 				023B5C361CF07968009BE120 /* Test.xcdatamodeld in Sources */,
+				024936C91D0776200085DA69 /* HashtagCell.swift in Sources */,
 				023B5C521CF08CA1009BE120 /* UITextViewExtension.swift in Sources */,
 				023E74591CF4D9CE00A584D5 /* Tags.swift in Sources */,
 				023E74641CF4E6F700A584D5 /* Constants.swift in Sources */,

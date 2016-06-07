@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?)
         -> Bool {
             FIRApp.configure()
+            UIApplication.sharedApplication().statusBarStyle = .LightContent
             return true
     }
     

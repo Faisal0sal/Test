@@ -15,6 +15,10 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
     @IBOutlet weak var tagField: UITextField!
     
     @IBOutlet weak var startChatting: UIButton!
+    @IBAction func startChatting(sender: UIButton) {
+        
+    }
+    
     
     @IBAction func logOut(sender: UIBarButtonItem) {
         let firebaseAuth = FIRAuth.auth()
@@ -27,7 +31,7 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
         }
     }
     
-    let trendingTags : [String] = ["Game of thrones","Peaky blinders"]
+    let trendingTags : [String] = ["Game of thrones","Peaky blinders","Peaky blinders","Peaky blinders","Peaky blinders","Peaky blinders","Peaky blinders","Peaky blinders"]
     
     override func viewDidLoad() {
         
@@ -44,6 +48,16 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
         self.startChatting.layer.borderColor = UIColor.grayColor().CGColor
     }
     
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        return "Current Trending hashtags"
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        
+        return 1
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return trendingTags.count;
     }
@@ -57,14 +71,18 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-
+        
+        if (textField.text?.characters.count == 1 && string == "") {
+            textField.text = "#"
+            return false
+        }
+        
         if textField.text?.characters.count <= 1 {
             textField.text = "#"
         }
+        
         if string.containsString(" ") {
             let replacedString = string.stringByReplacingOccurrencesOfString(" ", withString: "_", options: NSStringCompareOptions.LiteralSearch, range: nil)
-            
-            print(replacedString)
             
             textField.text?.appendContentsOf(replacedString)
             return false
