@@ -45,12 +45,7 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
         // -- Add bottom borders to buttons
         tagField.addBorder(.Bottom, color: UIColor(red: CGFloat(207/255.0), green: CGFloat(207/255.0), blue: CGFloat(207/255.0), alpha: CGFloat(1.0)), width: 2.0)
         // -- Add border to button
-        self.startChatting.layer.borderColor = UIColor.grayColor().CGColor
-    }
-    
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        
-        return "Current Trending hashtags"
+        //self.startChatting.layer.borderColor = UIColor.grayColor().CGColor
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -71,15 +66,6 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        
-        if (textField.text?.characters.count == 1 && string == "") {
-            textField.text = "#"
-            return false
-        }
-        
-        if textField.text?.characters.count <= 1 {
-            textField.text = "#"
-        }
         
         if string.containsString(" ") {
             let replacedString = string.stringByReplacingOccurrencesOfString(" ", withString: "_", options: NSStringCompareOptions.LiteralSearch, range: nil)
