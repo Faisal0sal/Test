@@ -13,11 +13,30 @@ import Firebase
 class Search: UIViewController {
     
     var tag : String?
+    var uid : String?
+    
+    var hashtagsRef: FIRDatabaseReference!
+    lazy var ref: FIRDatabaseReference = FIRDatabase.database().reference()
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // -- Set variables AppState
         tag = AppState.sharedInstance.tag
         
+        // -- set Navigation title as the tag
         navigationItem.title = tag
+        
+        // -- Set hashtag ref
+        hashtagsRef = ref.child(Constants.Hashtags.hashtags)
+        
+        // -- Add hashtag to database
+        if let tag = AppState.sharedInstance.tag {
+            
+            if let user = FIRAuth.auth()?.currentUser {
+                hashtagsRef.child(user.uid).setValue([Constants.Hashtags.hashtags: tag])
+            }
+        }
     }
     
     override func viewDidAppear(animated: Bool) {

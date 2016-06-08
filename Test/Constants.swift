@@ -25,4 +25,8 @@ struct Constants {
         static let photoUrl = "photoUrl"
         static let imageUrl = "imageUrl"
     }
+    
+    struct Hashtags {
+        static let hashtags = "hashtags"
+    }
 }

@@ -83,7 +83,7 @@ class Login: UIViewController, UITextFieldDelegate {
     }
     
     func loggedIn(user: FIRUser) {
-        
+        AppState.sharedInstance.uid = user.uid
         AppState.sharedInstance.displayName = user.displayName ?? user.email
         AppState.sharedInstance.photoUrl = user.photoURL
         AppState.sharedInstance.signedIn = true
