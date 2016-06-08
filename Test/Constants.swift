@@ -28,5 +28,6 @@ struct Constants {
     
     struct Hashtags {
         static let hashtags = "hashtags"
+        static let uid = "uid"
     }
 }

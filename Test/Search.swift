@@ -34,7 +34,7 @@ class Search: UIViewController {
         if let tag = AppState.sharedInstance.tag {
             
             if let user = FIRAuth.auth()?.currentUser {
-                hashtagsRef.child(user.uid).setValue([Constants.Hashtags.hashtags: tag])
+                hashtagsRef.child(tag).setValue([Constants.Hashtags.uid: user.uid])
             }
         }
     }

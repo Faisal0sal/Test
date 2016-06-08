@@ -12,6 +12,8 @@ import Firebase
 
 class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
+    @IBOutlet weak var loadingHashtags: UIActivityIndicatorView!
+    
     @IBOutlet weak var trendingTable: UITableView!
     @IBOutlet weak var tagField: UITextField!
     
@@ -40,10 +42,14 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
         }
     }
     
-    let trendingTags : [String] = ["Game of thrones","Peaky blinders","Peaky blinders","Peaky blinders","Peaky blinders","Peaky blinders","Peaky blinders","Peaky blinders"]
+    let trendingTags : [String] = []
+    
+    var hashtagsRef: FIRDatabaseReference!
+    lazy var ref: FIRDatabaseReference = FIRDatabase.database().reference()
     
     override func viewDidLoad() {
         
+        hashtagsRef = ref.child(Constants.Hashtags.hashtags)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -79,7 +85,7 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         
-        // -- replace spaces with _ for hashtag use
+        // -- replace spaces with "_" for hashtag use
         if string.containsString(" ") {
             let replacedString = string.stringByReplacingOccurrencesOfString(" ", withString: "_", options: NSStringCompareOptions.LiteralSearch, range: nil)
             
