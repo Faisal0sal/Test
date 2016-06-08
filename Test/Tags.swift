@@ -17,6 +17,15 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
     @IBOutlet weak var startChatting: UIButton!
     @IBAction func startChatting(sender: UIButton) {
         
+        if tagField.text?.isEmpty != true {
+            
+            
+            
+            print("Filled")
+        }else{
+            tagField.becomeFirstResponder()
+        }
+        
     }
     
     
@@ -40,12 +49,10 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
     override func viewDidAppear(animated: Bool) {
         // -- Hide Back Button
         self.navigationItem.setHidesBackButton(true, animated: true)
-        // -- Dissmiss keyboard
+        // -- Dissmiss keyboard on touch outside the textfield
         dismissKeyBoardOnEndEditing()
         // -- Add bottom borders to buttons
         tagField.addBorder(.Bottom, color: UIColor(red: CGFloat(207/255.0), green: CGFloat(207/255.0), blue: CGFloat(207/255.0), alpha: CGFloat(1.0)), width: 2.0)
-        // -- Add border to button
-        //self.startChatting.layer.borderColor = UIColor.grayColor().CGColor
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -67,6 +74,7 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         
+        // -- replace spaces with _ for hashtag use
         if string.containsString(" ") {
             let replacedString = string.stringByReplacingOccurrencesOfString(" ", withString: "_", options: NSStringCompareOptions.LiteralSearch, range: nil)
             
@@ -75,10 +83,5 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
         }
         
         return true
-    }
-    
-    func textFieldDidEndEditing(textField: UITextField) {
-        view.endEditing(true)
-        self.view.endEditing(true)
     }
 }

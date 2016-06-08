@@ -109,7 +109,7 @@
                                     <constraint firstItem="RYR-qQ-VPH" firstAttribute="leading" secondItem="9Jp-VZ-Q5k" secondAttribute="leading" constant="10" id="ctv-t1-vJM"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FEu-bA-JNv">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FEu-bA-JNv">
                                 <rect key="frame" x="20" y="116" width="560" height="38"/>
                                 <color key="backgroundColor" red="0.32156862745098036" green="0.78431372549019607" blue="0.79607843137254897" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -120,7 +120,7 @@
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
-                                        <real key="value" value="0.5"/>
+                                        <integer key="value" value="0"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="5"/>
