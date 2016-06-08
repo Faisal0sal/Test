@@ -15,6 +15,7 @@ struct Constants {
     struct Segues {
         static let LogInTo = "LogInTo"
         static let ToLogIn = "ToLogIn"
+        static let ToSearch = "ToSearch"
         static let ToChat = "ToChat"
     }
     

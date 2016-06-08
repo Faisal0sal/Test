@@ -15,4 +15,6 @@ class AppState: NSObject {
     var signedIn = false
     var displayName: String?
     var photoUrl: NSURL?
+    
+    var tag : String?
 }

@@ -12,20 +12,20 @@ import Firebase
 
 class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
+    @IBOutlet weak var trendingTable: UITableView!
     @IBOutlet weak var tagField: UITextField!
     
     @IBOutlet weak var startChatting: UIButton!
     @IBAction func startChatting(sender: UIButton) {
         
         if tagField.text?.isEmpty != true {
-            
-            
-            
+            // -- Move to search page
+            self.performSegueWithIdentifier(Constants.Segues.ToSearch, sender: self)
+            AppState.sharedInstance.tag = tagField.text
             print("Filled")
         }else{
             tagField.becomeFirstResponder()
         }
-        
     }
     
     
@@ -56,7 +56,6 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        
         return 1
     }
     
@@ -70,6 +69,12 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
         cell.textLabel?.text = trendingTags[indexPath.row]
         
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        self.performSegueWithIdentifier(Constants.Segues.ToSearch, sender: self)
+        AppState.sharedInstance.tag = trendingTags[indexPath.row]
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {

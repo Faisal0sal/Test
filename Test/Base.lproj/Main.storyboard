@@ -72,11 +72,11 @@
                                     <constraint firstItem="MkH-ra-2Dy" firstAttribute="top" secondItem="Qoz-sh-IcA" secondAttribute="top" constant="16" id="tbu-RG-AUD"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="38n-Oa-BoF">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="38n-Oa-BoF">
                                 <rect key="frame" x="0.0" y="191" width="600" height="409"/>
                                 <color key="backgroundColor" red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="aQ4-Ob-F5Z" customClass="HashtagCell" customModule="Test" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="aQ4-Ob-F5Z" customClass="HashtagCell" customModule="Test" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aQ4-Ob-F5Z" id="Jkf-71-ZYd">
@@ -157,17 +157,48 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="startChatting" destination="FEu-bA-JNv" id="3nt-qz-mSt"/>
                         <outlet property="tagField" destination="fqc-6f-bwY" id="PDD-V0-dGY"/>
+                        <outlet property="trendingTable" destination="38n-Oa-BoF" id="vNy-e0-CK9"/>
                         <segue destination="eP8-mB-htH" kind="showDetail" identifier="ToLogIn" id="lHP-nn-S59"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="ToChat" id="vYb-WK-Mcs"/>
+                        <segue destination="zbq-Zo-Rkh" kind="show" identifier="ToSearch" id="VGU-Jy-6P3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w1w-fH-dyr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1316" y="487"/>
+        </scene>
+        <!--Search-->
+        <scene sceneID="bHl-94-v99">
+            <objects>
+                <viewController id="zbq-Zo-Rkh" customClass="Search" customModule="Test" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Aac-sQ-pD0"/>
+                        <viewControllerLayoutGuide type="bottom" id="hla-s3-2dq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8Rn-Hj-YwH">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="3Iw-pW-pRT">
+                                <rect key="frame" x="282" y="281" width="37" height="37"/>
+                                <color key="color" red="0.13099819200000001" green="0.53664434900000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="3Iw-pW-pRT" firstAttribute="centerX" secondItem="8Rn-Hj-YwH" secondAttribute="centerX" id="srl-a8-0FR"/>
+                            <constraint firstItem="3Iw-pW-pRT" firstAttribute="centerY" secondItem="8Rn-Hj-YwH" secondAttribute="centerY" id="u4X-sH-PgN"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="show" id="OVK-hf-X2l"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jCl-gX-9PU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2078" y="487"/>
         </scene>
         <!--Login-->
         <scene sceneID="uud-XB-67R">
@@ -415,7 +446,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2090" y="487"/>
+            <point key="canvasLocation" x="2836" y="487"/>
         </scene>
     </scenes>
 </document>

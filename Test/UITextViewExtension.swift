@@ -31,6 +31,7 @@ extension UIViewController {
         // MARK: use old selector
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissMaskView))
         View!.addGestureRecognizer(tap)
+        tap.cancelsTouchesInView = false
     }
     
     func dismissMaskView(){
