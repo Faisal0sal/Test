@@ -34,12 +34,40 @@ class Search: UIViewController {
         if let tag = AppState.sharedInstance.tag {
             
             if let user = FIRAuth.auth()?.currentUser {
-                hashtagsRef.child(tag).setValue([Constants.Hashtags.uid: user.uid])
+                                
+                hashtagsRef.child(tag).child(user.uid).setValue("")
             }
         }
     }
     
     override func viewDidAppear(animated: Bool) {
+        pickRandomPeopleFromHasgtag()
+    }
+    
+    func pickRandomPeopleFromHasgtag() {
         
+        hashtagsRef.queryOrderedByKey().queryStartingAtValue(tag).observeSingleEventOfType(.ChildAdded, withBlock: { (snapshot) in
+            
+            let hashtags = snapshot.value as? NSDictionary
+            if let users : NSArray = hashtags?.allKeys {
+                if let randomNumber : Int = Int(arc4random_uniform(UInt32(users.count))) {
+                    if let uid : String? = users[randomNumber] as? String {
+                        if (FIRAuth.auth()?.currentUser?.uid) == uid {
+                            self.pickRandomPeopleFromHasgtag()
+                            
+                        }else{
+                            AppState.sharedInstance.uid = uid
+                            self.performSegueWithIdentifier(Constants.Segues.ToChat, sender: self)
+                        }
+                    }
+                }
+            }
+        })
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        if let user = FIRAuth.auth()?.currentUser {
+            self.hashtagsRef.child(tag!).child(user.uid).removeValue()
+        }
     }
 }

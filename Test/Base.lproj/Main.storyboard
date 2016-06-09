@@ -199,7 +199,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="show" id="OVK-hf-X2l"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="ToChat" id="OVK-hf-X2l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jCl-gX-9PU" userLabel="First Responder" sceneMemberID="firstResponder"/>
