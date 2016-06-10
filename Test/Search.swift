@@ -36,6 +36,7 @@ class Search: UIViewController {
             if let user = FIRAuth.auth()?.currentUser {
                                 
                 hashtagsRef.child(tag).child(user.uid).setValue("")
+                hashtagsRef.child(tag).child(user.uid).onDisconnectRemoveValue()
             }
         }
     }

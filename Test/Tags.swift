@@ -30,7 +30,6 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
         }
     }
     
-    
     @IBAction func logOut(sender: UIBarButtonItem) {
         let firebaseAuth = FIRAuth.auth()
         do {
@@ -63,11 +62,13 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
         self.loadingHashtags.startAnimating()
         self.trendingHashtags.removeAll()
         // -- Get trending hashtags
+        
         hashtagsRef.queryOrderedByKey().observeSingleEventOfType(.Value, withBlock: { (snapshot) in
             
             self.loadingHashtags.stopAnimating()
             
             for hashtag in snapshot.children {
+                
                 if let snap = hashtag as? FIRDataSnapshot {
                     
                     self.trendingHashtags += [(snap.key, snap.childrenCount)]

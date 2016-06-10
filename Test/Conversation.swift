@@ -16,11 +16,17 @@ class Conversation: UIViewController, UITextViewDelegate, UITableViewDelegate, U
     @IBOutlet weak var MessageTextViewView: UIView!
     @IBOutlet weak var MessageViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var MessageViewFieldHeightConstraint: NSLayoutConstraint!
-
+    
+    @IBAction func Back(sender: AnyObject) {
+        performSegueWithIdentifier("ToTags", sender: self)
+    }
+    
     @IBAction func Send(sender: AnyObject) {
         
-        self.ref.child("messages").childByAutoId().child("message").setValue(MessageTextViewField.text!)
-        MessageTextViewField.text = ""
+        if let user = FIRAuth.auth()?.currentUser {
+            self.ref.child("messages").childByAutoId().setValue(["message":MessageTextViewField.text,"sender":user.uid])
+            MessageTextViewField.text = ""
+        }
     }
 
     var messagesRef: FIRDatabaseReference!
@@ -52,8 +58,10 @@ class Conversation: UIViewController, UITextViewDelegate, UITableViewDelegate, U
     }
 
     override func viewWillAppear(animated: Bool) {
+        // -- Hide Back Button
+        self.navigationItem.setHidesBackButton(true, animated: true)
         
-        messagesRef.observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
+        messagesRef.queryEqualToValue(AppState.sharedInstance.uid).observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
             print(snapshot)
             self.msgs.append(snapshot)
             self.ChatTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.msgs.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
@@ -116,34 +124,6 @@ class Conversation: UIViewController, UITextViewDelegate, UITableViewDelegate, U
             self.view.layoutIfNeeded()
             }, completion: nil)
     }
-
-    //    func textViewDidChange(textView: UITextView) {
-    //
-    //        let pos = textView.endOfDocument
-    //        let currentRect = textView.caretRectForPosition(pos)
-    //
-    //
-    //        print(currentRect.origin.y)
-    //        print(previousRect.origin.y)
-    //
-    //        if (currentRect.origin.y > previousRect.origin.y) {
-    //
-    //            if self.MessageViewFieldHeightConstraint.constant < 300 {
-    //
-    //                self.MessageViewFieldHeightConstraint.constant += 21
-    //                self.MessageViewHeightConstraint.constant += 21
-    //            }
-    //
-    //            print(self.MessageViewFieldHeightConstraint.constant)
-    //        }
-    //
-    //        if (currentRect.origin.y < previousRect.origin.y) {
-    //            self.MessageViewFieldHeightConstraint.constant -= 21
-    //            self.MessageViewHeightConstraint.constant -= 21
-    //        }
-    //
-    //        previousRect = currentRect
-    //    }
 
     func keyboardShown(notification: NSNotification) {
         let info  = notification.userInfo!
