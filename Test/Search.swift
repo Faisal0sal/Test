@@ -16,6 +16,7 @@ class Search: UIViewController {
     var uid : String?
     
     var hashtagsRef: FIRDatabaseReference!
+    var added: FIRDatabaseReference!
     lazy var ref: FIRDatabaseReference = FIRDatabase.database().reference()
     
     override func viewDidLoad() {
@@ -34,9 +35,10 @@ class Search: UIViewController {
         if let tag = AppState.sharedInstance.tag {
             
             if let user = FIRAuth.auth()?.currentUser {
-                                
-                hashtagsRef.child(tag).child(user.uid).setValue("")
-                hashtagsRef.child(tag).child(user.uid).onDisconnectRemoveValue()
+                
+                added = hashtagsRef.child(tag).childByAutoId()
+                added.setValue(["uid":user.uid])
+                added.onDisconnectRemoveValue()
             }
         }
     }
@@ -47,28 +49,18 @@ class Search: UIViewController {
     
     func pickRandomPeopleFromHasgtag() {
         
-        hashtagsRef.queryOrderedByKey().queryStartingAtValue(tag).observeSingleEventOfType(.ChildAdded, withBlock: { (snapshot) in
+        hashtagsRef.child(tag!).observeEventType(.ChildAdded, withBlock: { (snapshot) in
             
-            let hashtags = snapshot.value as? NSDictionary
-            if let users : NSArray = hashtags?.allKeys {
-                if let randomNumber : Int = Int(arc4random_uniform(UInt32(users.count))) {
-                    if let uid : String? = users[randomNumber] as? String {
-                        if (FIRAuth.auth()?.currentUser?.uid) == uid {
-                            self.pickRandomPeopleFromHasgtag()
-                            
-                        }else{
-                            AppState.sharedInstance.uid = uid
-                            self.performSegueWithIdentifier(Constants.Segues.ToChat, sender: self)
-                        }
-                    }
-                }
+            let enumerator = snapshot.children
+            while let snap = enumerator.nextObject() as? FIRDataSnapshot {
+                print(snap.value)
             }
         })
     }
     
     override func viewWillDisappear(animated: Bool) {
         if let user = FIRAuth.auth()?.currentUser {
-            self.hashtagsRef.child(tag!).child(user.uid).removeValue()
+            added.removeValue()
         }
     }
 }

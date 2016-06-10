@@ -58,14 +58,11 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
         dismissKeyBoardOnEndEditing()
         // -- Add bottom borders to buttons
         tagField.addBorder(.Bottom, color: UIColor(red: CGFloat(207/255.0), green: CGFloat(207/255.0), blue: CGFloat(207/255.0), alpha: CGFloat(1.0)), width: 2.0)
-        
-        self.loadingHashtags.startAnimating()
+
         self.trendingHashtags.removeAll()
         // -- Get trending hashtags
         
         hashtagsRef.observeEventType(.ChildAdded, withBlock: { (snapshot) in
-            
-            self.loadingHashtags.stopAnimating()
             
             let enumerator = snapshot.children
             while let snap = enumerator.nextObject() as? FIRDataSnapshot {
