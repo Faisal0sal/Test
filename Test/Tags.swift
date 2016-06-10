@@ -41,7 +41,7 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
         }
     }
     
-    var trendingHashtags = Array<(hashtag: String, count: UInt)>()
+    var trendingHashtags : [String] = []
     
     var hashtagsRef: FIRDatabaseReference!
     lazy var ref: FIRDatabaseReference = FIRDatabase.database().reference()
@@ -63,11 +63,9 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
         // -- Get trending hashtags
         
         hashtagsRef.observeEventType(.ChildAdded, withBlock: { (snapshot) in
-            
+            print(snapshot)
             let enumerator = snapshot.children
-            while let snap = enumerator.nextObject() as? FIRDataSnapshot {
-                self.trendingHashtags += [(snapshot.key, snap.childrenCount)]
-            }
+            self.trendingHashtags += [snapshot.key]
             
             self.trendingTable.reloadData()
             
@@ -77,6 +75,7 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
         
         hashtagsRef.observeEventType(.ChildRemoved, withBlock: { (snapshot) -> Void in
             let index = self.indexOfMessage(snapshot)
+            print(index)
             self.trendingHashtags.removeAtIndex(index)
             self.trendingTable.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
         })
@@ -85,7 +84,7 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
     func indexOfMessage(snapshot: FIRDataSnapshot) -> Int {
         var index = 0
         for message in self.trendingHashtags {
-            if (snapshot.key == message.hashtag) {
+            if (snapshot.key == message) {
                 return index
             }
             print(snapshot.key)
@@ -106,7 +105,7 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell
         
-        cell.textLabel?.text = trendingHashtags[indexPath.row].hashtag
+        cell.textLabel?.text = trendingHashtags[indexPath.row]
         
         return cell
     }
@@ -114,7 +113,7 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         self.performSegueWithIdentifier(Constants.Segues.ToSearch, sender: self)
-        AppState.sharedInstance.tag = trendingHashtags[indexPath.row].hashtag
+        AppState.sharedInstance.tag = trendingHashtags[indexPath.row]
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {

@@ -75,11 +75,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="38n-Oa-BoF">
                                 <rect key="frame" x="0.0" y="191" width="600" height="409"/>
                                 <color key="backgroundColor" red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
-                                <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" id="yev-SK-tKh">
-                                    <rect key="frame" x="0.0" y="72" width="600" height="37"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="color" red="0.13099819200000001" green="0.53664434900000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </activityIndicatorView>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="aQ4-Ob-F5Z" customClass="HashtagCell" customModule="Test" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
@@ -163,7 +158,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="loadingHashtags" destination="yev-SK-tKh" id="WAb-VC-9SS"/>
                         <outlet property="startChatting" destination="FEu-bA-JNv" id="3nt-qz-mSt"/>
                         <outlet property="tagField" destination="fqc-6f-bwY" id="PDD-V0-dGY"/>
                         <outlet property="trendingTable" destination="38n-Oa-BoF" id="vNy-e0-CK9"/>
