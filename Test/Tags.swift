@@ -63,16 +63,13 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
         self.trendingHashtags.removeAll()
         // -- Get trending hashtags
         
-        hashtagsRef.queryOrderedByKey().observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+        hashtagsRef.observeEventType(.ChildAdded, withBlock: { (snapshot) in
             
             self.loadingHashtags.stopAnimating()
             
-            for hashtag in snapshot.children {
-                
-                if let snap = hashtag as? FIRDataSnapshot {
-                    
-                    self.trendingHashtags += [(snap.key, snap.childrenCount)]
-                }
+            let enumerator = snapshot.children
+            while let snap = enumerator.nextObject() as? FIRDataSnapshot {
+                self.trendingHashtags += [(snapshot.key, snap.childrenCount)]
             }
             
             self.trendingTable.reloadData()
@@ -80,6 +77,24 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
         }) { (error) in
             print(error.localizedDescription)
         }
+        
+        hashtagsRef.observeEventType(.ChildRemoved, withBlock: { (snapshot) -> Void in
+            let index = self.indexOfMessage(snapshot)
+            self.trendingHashtags.removeAtIndex(index)
+            self.trendingTable.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+        })
+    }
+    
+    func indexOfMessage(snapshot: FIRDataSnapshot) -> Int {
+        var index = 0
+        for message in self.trendingHashtags {
+            if (snapshot.key == message.hashtag) {
+                return index
+            }
+            print(snapshot.key)
+            index += 1
+        }
+        return -1
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
