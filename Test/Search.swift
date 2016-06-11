@@ -44,6 +44,7 @@ class Search: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
+        // -- Pick random people 
         pickRandomPeopleFromHasgtag()
     }
     
@@ -59,8 +60,7 @@ class Search: UIViewController {
     }
     
     override func viewWillDisappear(animated: Bool) {
-        if let user = FIRAuth.auth()?.currentUser {
-            added.removeValue()
-        }
+        // - Using the reference for added hashtag, it will be deleted once the search page is off
+        added.removeValue()
     }
 }

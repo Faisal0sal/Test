@@ -80,7 +80,6 @@ class Conversation: UIViewController, UITextViewDelegate, UITableViewDelegate, U
             if (snapshot.key == message.key) {
                 return index
             }
-            print(snapshot.key)
             index += 1
         }
         return -1
@@ -112,10 +111,12 @@ class Conversation: UIViewController, UITextViewDelegate, UITableViewDelegate, U
     }
 
     func textViewDidBeginEditing(textView: UITextView) {
+        // -- Coming UITextViewExtension
         addPlaceHolderToTextView(textView, begin: true)
     }
 
     func textViewDidEndEditing(textView: UITextView) {
+        // -- Coming UITextViewExtension
         addPlaceHolderToTextView(textView, begin: false)
         
         self.loadViewIfNeeded()
@@ -124,7 +125,9 @@ class Conversation: UIViewController, UITextViewDelegate, UITableViewDelegate, U
             self.view.layoutIfNeeded()
             }, completion: nil)
     }
-
+    
+    
+    // -- Keyboard to be shown animated and change the height accordingly with the keyboard
     func keyboardShown(notification: NSNotification) {
         let info  = notification.userInfo!
         let value: AnyObject = info[UIKeyboardFrameEndUserInfoKey]!

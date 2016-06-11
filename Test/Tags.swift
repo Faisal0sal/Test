@@ -12,8 +12,6 @@ import Firebase
 
 class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
-    @IBOutlet weak var loadingHashtags: UIActivityIndicatorView!
-    
     @IBOutlet weak var trendingTable: UITableView!
     @IBOutlet weak var tagField: UITextField!
     
@@ -26,6 +24,7 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
             AppState.sharedInstance.tag = tagField.text
             print("Filled")
         }else{
+            // -- To inform the user to write a hashtag; focus will be on the hashtag field
             tagField.becomeFirstResponder()
         }
     }
@@ -47,7 +46,7 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
     lazy var ref: FIRDatabaseReference = FIRDatabase.database().reference()
     
     override func viewDidLoad() {
-        
+        // -- Decalre reference to hashtag
         hashtagsRef = ref.child(Constants.Hashtags.hashtags)
     }
     
@@ -63,8 +62,9 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
         // -- Get trending hashtags
         
         hashtagsRef.observeEventType(.ChildAdded, withBlock: { (snapshot) in
-            print(snapshot)
-            let enumerator = snapshot.children
+            
+//            let enumerator = snapshot.children
+            // -- Fill in the trending hashtag array with current used hashtags
             self.trendingHashtags += [snapshot.key]
             
             self.trendingTable.reloadData()
@@ -74,9 +74,13 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
         }
         
         hashtagsRef.observeEventType(.ChildRemoved, withBlock: { (snapshot) -> Void in
+            
+            // -- Fix the index of hashtags coming for it to be ready to get deleted
             let index = self.indexOfMessage(snapshot)
-            print(index)
+            
+            // -- Remove trending hashtags from array
             self.trendingHashtags.removeAtIndex(index)
+            // -- Remove from table
             self.trendingTable.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
         })
     }
@@ -98,6 +102,7 @@ class Tags: UIViewController, UITableViewDelegate, UITableViewDataSource, UIText
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         
         return trendingHashtags.count ?? 0
     }
