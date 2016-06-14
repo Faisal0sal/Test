@@ -55,6 +55,9 @@ class Search: UIViewController {
             let enumerator = snapshot.children
             while let snap = enumerator.nextObject() as? FIRDataSnapshot {
                 print(snap.value)
+                AppState.sharedInstance.uid = snap.value as? String
+                self.performSegueWithIdentifier("ToChat", sender: nil)
+                break
             }
         })
     }
