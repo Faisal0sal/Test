@@ -55,6 +55,7 @@ class Conversation: UIViewController, UITextViewDelegate, UITableViewDelegate, U
         // Setting up AUTOMATICDIMENSION
         ChatTableView.estimatedRowHeight = 68.0
         ChatTableView.rowHeight = UITableViewAutomaticDimension
+        print(AppState.sharedInstance.uid)
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -137,7 +138,7 @@ class Conversation: UIViewController, UITextViewDelegate, UITableViewDelegate, U
         keyboard.Curve = UInt(info[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber)
         
         self.loadViewIfNeeded()
-        UIView.animateWithDuration(keyboard.Duration, delay: 0.0, options: UIViewAnimationOptions(rawValue: keyboard.Curve), animations: {_ in
+        UIView.animateWithDuration(keyboard.Duration, delay: 0.0, options: UIViewAnimationOptions(rawValue: keyboard.Curve), animations: { _ in
             self.MessageViewHeightConstraint.constant = self.keyboard.KeyBoardHeight + 55
             self.view.layoutIfNeeded()
             }, completion: nil)

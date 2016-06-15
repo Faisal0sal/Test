@@ -50,16 +50,15 @@ class Search: UIViewController {
     
     func pickRandomPeopleFromHasgtag() {
         
-        hashtagsRef.child(tag!).observeEventType(.ChildAdded, withBlock: { (snapshot) in
+        hashtagsRef.child(tag!).observeEventType(.Value, withBlock: { (snapshot) in
             
             let enumerator = snapshot.children
-            while let snap = enumerator.nextObject() as? FIRDataSnapshot {
-                print(snap.value)
+            if let snap = enumerator.nextObject() as? FIRDataSnapshot {
                 AppState.sharedInstance.uid = snap.value as? String
-                self.performSegueWithIdentifier("ToChat", sender: nil)
-                break
             }
         })
+        
+        self.performSegueWithIdentifier("ToChat", sender: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
