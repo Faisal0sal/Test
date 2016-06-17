@@ -82,18 +82,21 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
     override func viewWillAppear(animated: Bool) {
         // -- Hide Back Button
         self.navigationItem.setHidesBackButton(true, animated: true)
-        
-        messagesRef.queryEqualToValue(AppState.sharedInstance.uid).observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
-            print(snapshot)
-            self.msgs.append(snapshot)
-            self.ChatTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.msgs.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
-        })
-        
-        messagesRef.observeEventType(.ChildRemoved, withBlock: { (snapshot) -> Void in
-            let index = self.indexOfMessage(snapshot)
-            self.msgs.removeAtIndex(index)
-            self.ChatTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
-        })
+        if let uid = AppState.sharedInstance.uid {
+            
+            messagesRef.queryOrderedByChild("sender").queryEqualToValue(uid).observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
+                print(snapshot)
+                self.msgs.append(snapshot)
+                self.ChatTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.msgs.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+            })
+            
+            messagesRef.queryOrderedByChild("sender").queryEqualToValue(uid).observeEventType(.ChildRemoved, withBlock: { (snapshot) -> Void in
+                let index = self.indexOfMessage(snapshot)
+                self.msgs.removeAtIndex(index)
+                self.ChatTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+            })
+            
+        }
     }
 
     func indexOfMessage(snapshot: FIRDataSnapshot) -> Int {
