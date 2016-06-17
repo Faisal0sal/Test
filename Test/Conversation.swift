@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class Conversation: UIViewController, UITextViewDelegate, UITableViewDelegate, UITableViewDataSource {
+class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var ChatTableView: UITableView!
     @IBOutlet weak var MessageTextViewField: UITextView!
@@ -27,6 +27,27 @@ class Conversation: UIViewController, UITextViewDelegate, UITableViewDelegate, U
             self.ref.child("messages").childByAutoId().setValue(["message":MessageTextViewField.text,"sender":user.uid])
             MessageTextViewField.text = ""
         }
+    }
+    
+    @IBAction func SendPicture(sender: AnyObject) {
+        
+        let imageFromSrouce = UIImagePickerController()
+        imageFromSrouce.delegate = self
+        
+        if (UIImagePickerController.isSourceTypeAvailable(.Camera)){
+            
+            if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil {
+                imageFromSrouce.allowsEditing = false
+                imageFromSrouce.sourceType = .Camera
+                imageFromSrouce.cameraCaptureMode = .Photo
+            }
+            
+        } else {
+            imageFromSrouce.sourceType = .PhotoLibrary
+        }
+        
+        presentViewController(imageFromSrouce, animated: true, completion: nil)
+        
     }
 
     var messagesRef: FIRDatabaseReference!
@@ -126,6 +147,9 @@ class Conversation: UIViewController, UITextViewDelegate, UITableViewDelegate, U
             self.view.layoutIfNeeded()
             }, completion: nil)
     }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        dismissViewControllerAnimated(true, completion: nil)    }
     
     
     // -- Keyboard to be shown animated and change the height accordingly with the keyboard

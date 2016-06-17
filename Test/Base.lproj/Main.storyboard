@@ -423,6 +423,9 @@
                                             <constraint firstAttribute="width" constant="27" id="mAk-BU-9F2"/>
                                         </constraints>
                                         <state key="normal" title="Img"/>
+                                        <connections>
+                                            <action selector="SendPicture:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uVd-62-ZEl"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.49803921569999998" green="0.7843137255" blue="0.79607843140000001" alpha="1" colorSpace="calibratedRGB"/>
