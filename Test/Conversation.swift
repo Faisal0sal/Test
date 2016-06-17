@@ -49,14 +49,18 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
         presentViewController(imageFromSrouce, animated: true, completion: nil)
         
     }
-
+    
+    // -- Reference to Database
     var messagesRef: FIRDatabaseReference!
     lazy var ref: FIRDatabaseReference = FIRDatabase.database().reference()
+    // -- Reference to storage
+    lazy var storageRef = FIRStorage.storage().reference()
 
+    
     private var previousRect = CGRectZero
     var msgs: Array<FIRDataSnapshot> = []
 
-    // Keyboard details
+    // -- Keyboard details
     struct keyBoard {
         var KeyBoardHeight = CGFloat()
         var Duration = NSTimeInterval()
@@ -71,9 +75,9 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
                                                          selector: #selector(Conversation.keyboardShown(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
         
         self.MessageTextViewField.delegate = self
-        // UITextViewExtension ---
+        // -- UITextViewExtension
         dismissKeyBoardOnEndEditing()
-        // Setting up AUTOMATICDIMENSION
+        // -- Setting up AUTOMATICDIMENSION
         ChatTableView.estimatedRowHeight = 68.0
         ChatTableView.rowHeight = UITableViewAutomaticDimension
         print(AppState.sharedInstance.uid)
@@ -84,6 +88,7 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
         self.navigationItem.setHidesBackButton(true, animated: true)
         if let uid = AppState.sharedInstance.uid {
             
+            // --
             messagesRef.queryOrderedByChild("sender").queryEqualToValue(uid).observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
                 print(snapshot)
                 self.msgs.append(snapshot)
@@ -131,7 +136,7 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
             print(self.messagesRef.child(self.msgs[indexPath.row].key))
             self.messagesRef.child(self.msgs[indexPath.row].key).removeValue()
         } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+            // -- Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
     }
 
@@ -152,7 +157,42 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        dismissViewControllerAnimated(true, completion: nil)    }
+        
+        var uploadTask = FIRStorageUploadTask()
+        
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            
+            let imageData = UIImageJPEGRepresentation(image, 0.0)
+            // -- Upload image
+            let imageRef = self.storageRef.child("images/\(Int(NSDate.timeIntervalSinceReferenceDate() * 1000)).jpg")
+            
+            // Upload the file to the path "images/rivers.jpg"
+            uploadTask = imageRef.putData(imageData!, metadata: nil)
+            
+            uploadTask.observeStatus(.Progress) { snapshot in
+                // Upload reported progress
+                if let progress = snapshot.progress {
+                    let percentComplete = Float(progress.completedUnitCount) / Float(progress.totalUnitCount)
+                    print(percentComplete)
+//                    self.ProgressBar.setProgress(percentComplete, animated: true)
+                }
+            }
+            
+            uploadTask.observeStatus(.Success) { snapshot in
+                // Upload completed successfully
+                print("success")
+//                self.dbRef.child("posts").child(self.UserId).childByAutoId().setValue(data)
+//                self.performSegueWithIdentifier("BackToProfile", sender: nil)
+            }
+            
+            uploadTask.observeStatus(.Failure) { snapshot in
+                // Upload failed
+                print(snapshot)
+            }
+        }
+        
+        dismissViewControllerAnimated(true, completion: nil)
+    }
     
     
     // -- Keyboard to be shown animated and change the height accordingly with the keyboard
