@@ -356,7 +356,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BhK-pR-kt5">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="532"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="messageCell" editingAccessoryType="disclosureIndicator" textLabel="cAk-HF-OTf" style="IBUITableViewCellStyleDefault" id="U6n-1Q-ZbG">
@@ -424,7 +424,7 @@
                                         </constraints>
                                         <state key="normal" title="Img"/>
                                         <connections>
-                                            <action selector="SendPicture:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uVd-62-ZEl"/>
+                                            <action selector="SendPicture:" destination="BYZ-38-t0r" eventType="touchUpInside" id="B8R-76-Hsy"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -446,13 +446,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="BhK-pR-kt5" firstAttribute="trailing" secondItem="tvK-wR-6fc" secondAttribute="trailing" id="APi-iZ-vwJ"/>
+                            <constraint firstItem="BhK-pR-kt5" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" constant="-68" id="2Te-ho-JJQ"/>
+                            <constraint firstItem="BhK-pR-kt5" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="4gQ-rj-MNE"/>
                             <constraint firstItem="tvK-wR-6fc" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="DFP-vh-5yi"/>
-                            <constraint firstItem="BhK-pR-kt5" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Mqc-vf-Ifl"/>
-                            <constraint firstItem="BhK-pR-kt5" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="ZSs-wY-njQ"/>
-                            <constraint firstItem="BhK-pR-kt5" firstAttribute="leading" secondItem="tvK-wR-6fc" secondAttribute="leading" id="cVF-H0-V9F"/>
-                            <constraint firstAttribute="trailing" secondItem="BhK-pR-kt5" secondAttribute="trailing" id="e6F-ub-7LK"/>
-                            <constraint firstItem="BhK-pR-kt5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="imN-Yv-Lal"/>
+                            <constraint firstAttribute="trailing" secondItem="BhK-pR-kt5" secondAttribute="trailing" id="EAh-bV-YcU"/>
+                            <constraint firstItem="BhK-pR-kt5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Ia9-g9-qCG"/>
+                            <constraint firstItem="BhK-pR-kt5" firstAttribute="leading" secondItem="tvK-wR-6fc" secondAttribute="leading" id="daW-yc-eM8"/>
+                            <constraint firstItem="BhK-pR-kt5" firstAttribute="trailing" secondItem="tvK-wR-6fc" secondAttribute="trailing" id="qo9-pf-HUX"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="zLx-R1-LtC">

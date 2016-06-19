@@ -55,11 +55,12 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
     lazy var ref: FIRDatabaseReference = FIRDatabase.database().reference()
     // -- Reference to storage
     lazy var storageRef = FIRStorage.storage().reference()
-
+    // -- List
+//    var types : Array<AnyObject> = []
     
     private var previousRect = CGRectZero
-    var msgs: Array<FIRDataSnapshot> = []
-
+    var msgs: Array<AnyObject> = []
+    
     // -- Keyboard details
     struct keyBoard {
         var KeyBoardHeight = CGFloat()
@@ -80,6 +81,8 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
         // -- Setting up AUTOMATICDIMENSION
         ChatTableView.estimatedRowHeight = 68.0
         ChatTableView.rowHeight = UITableViewAutomaticDimension
+        ChatTableView.registerNib(UINib(nibName: "ImageCell", bundle: nil), forCellReuseIdentifier: "messageCell")
+        ChatTableView.registerClass(ImageCell.classForCoder(), forCellReuseIdentifier: "messageCell")
         print(AppState.sharedInstance.uid)
     }
 
@@ -125,8 +128,21 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("messageCell", forIndexPath: indexPath) as UITableViewCell
-        cell.textLabel?.text = self.msgs[indexPath.row].value!["message"] as? String
+        let identifier = "messageCell"
+        var cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as UITableViewCell
+        
+        
+        for subview in cell.contentView.subviews  {
+            subview.removeFromSuperview()
+        }
+        
+        if self.msgs[indexPath.row] is FIRDataSnapshot {
+            cell.textLabel?.text = self.msgs[indexPath.row].value!["message"] as? String
+            return cell
+        }
+            cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ImageCell
+            cell.imageView?.image = self.msgs[indexPath.row] as? UIImage
+        
         return cell
     }
 
@@ -168,9 +184,11 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
             
             // Upload the file to the path "images/rivers.jpg"
             uploadTask = imageRef.putData(imageData!, metadata: nil)
+            self.msgs.append(image)
+            self.ChatTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.msgs.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
             
             uploadTask.observeStatus(.Progress) { snapshot in
-                // Upload reported progress
+                // -- Upload reported progress
                 if let progress = snapshot.progress {
                     let percentComplete = Float(progress.completedUnitCount) / Float(progress.totalUnitCount)
                     print(percentComplete)
@@ -193,7 +211,6 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
         
         dismissViewControllerAnimated(true, completion: nil)
     }
-    
     
     // -- Keyboard to be shown animated and change the height accordingly with the keyboard
     func keyboardShown(notification: NSNotification) {

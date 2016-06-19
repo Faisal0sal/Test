@@ -22,6 +22,8 @@
 		023E74661CF5F76200A584D5 /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E74651CF5F76200A584D5 /* Border.swift */; };
 		024936C91D0776200085DA69 /* HashtagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024936C81D0776200085DA69 /* HashtagCell.swift */; };
 		024936CB1D0842AA0085DA69 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024936CA1D0842AA0085DA69 /* Search.swift */; };
+		028093311D151A5600EBB9AF /* ImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 028093301D151A5600EBB9AF /* ImageCell.xib */; };
+		028093331D15C4E800EBB9AF /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028093321D15C4E800EBB9AF /* ImageCell.swift */; };
 		02BC1E6D1D09492500AAB1C9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 02BC1E6C1D09492500AAB1C9 /* GoogleService-Info.plist */; };
 		8600FF6A97FF301CD118DFB0 /* libPods-Test.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 392262D0FBC24F8A9CEB02FB /* libPods-Test.a */; };
 /* End PBXBuildFile section */
@@ -56,6 +58,8 @@
 		023E74651CF5F76200A584D5 /* Border.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Border.swift; sourceTree = "<group>"; };
 		024936C81D0776200085DA69 /* HashtagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagCell.swift; sourceTree = "<group>"; };
 		024936CA1D0842AA0085DA69 /* Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
+		028093301D151A5600EBB9AF /* ImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageCell.xib; sourceTree = "<group>"; };
+		028093321D15C4E800EBB9AF /* ImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		02BC1E6C1D09492500AAB1C9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		392262D0FBC24F8A9CEB02FB /* libPods-Test.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Test.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFF0A6B22FBA65332804164E /* Pods-Test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Test.release.xcconfig"; path = "Pods/Target Support Files/Pods-Test/Pods-Test.release.xcconfig"; sourceTree = "<group>"; };
@@ -112,6 +116,7 @@
 				024936C81D0776200085DA69 /* HashtagCell.swift */,
 				024936CA1D0842AA0085DA69 /* Search.swift */,
 				023E745A1CF4DA4400A584D5 /* Conversation.swift */,
+				028093321D15C4E800EBB9AF /* ImageCell.swift */,
 				023E745F1CF4E56100A584D5 /* Supporting Files */,
 			);
 			path = Test;
@@ -144,6 +149,7 @@
 				023B5C391CF07968009BE120 /* LaunchScreen.storyboard */,
 				023B5C3C1CF07968009BE120 /* Info.plist */,
 				023B5C341CF07968009BE120 /* Test.xcdatamodeld */,
+				028093301D151A5600EBB9AF /* ImageCell.xib */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -261,6 +267,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				023B5C3B1CF07968009BE120 /* LaunchScreen.storyboard in Resources */,
+				028093311D151A5600EBB9AF /* ImageCell.xib in Resources */,
 				02BC1E6D1D09492500AAB1C9 /* GoogleService-Info.plist in Resources */,
 				023B5C381CF07968009BE120 /* Assets.xcassets in Resources */,
 				023B5C331CF07968009BE120 /* Main.storyboard in Resources */,
@@ -334,6 +341,7 @@
 				023E74661CF5F76200A584D5 /* Border.swift in Sources */,
 				023B5C301CF07968009BE120 /* Login.swift in Sources */,
 				023E74621CF4E5BF00A584D5 /* AppState.swift in Sources */,
+				028093331D15C4E800EBB9AF /* ImageCell.swift in Sources */,
 				023B5C2E1CF07968009BE120 /* AppDelegate.swift in Sources */,
 				023B5C361CF07968009BE120 /* Test.xcdatamodeld in Sources */,
 				024936C91D0776200085DA69 /* HashtagCell.swift in Sources */,
