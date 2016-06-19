@@ -81,8 +81,7 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
         // -- Setting up AUTOMATICDIMENSION
         ChatTableView.estimatedRowHeight = 68.0
         ChatTableView.rowHeight = UITableViewAutomaticDimension
-        ChatTableView.registerNib(UINib(nibName: "ImageCell", bundle: nil), forCellReuseIdentifier: "messageCell")
-        ChatTableView.registerClass(ImageCell.classForCoder(), forCellReuseIdentifier: "messageCell")
+        ChatTableView.registerNib(UINib(nibName: "ImageCell", bundle: nil), forCellReuseIdentifier: "cellImage")
         print(AppState.sharedInstance.uid)
     }
 
@@ -140,7 +139,7 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
             cell.textLabel?.text = self.msgs[indexPath.row].value!["message"] as? String
             return cell
         }
-            cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! ImageCell
+            cell = tableView.dequeueReusableCellWithIdentifier("cellImage", forIndexPath: indexPath) as! ImageCell
             cell.imageView?.image = self.msgs[indexPath.row] as? UIImage
         
         return cell
