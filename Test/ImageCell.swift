@@ -11,6 +11,7 @@ import UIKit
 class ImageCell: UITableViewCell {
     
     @IBOutlet weak var imgView: UIImageView!
+    @IBOutlet weak var progressView: UIProgressView!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

@@ -14,13 +14,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="198.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AcU-ND-Qq3">
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AcU-ND-Qq3">
                         <rect key="frame" x="8" y="8" width="183" height="183"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="183" id="jxE-Zw-EhB"/>
                             <constraint firstAttribute="height" constant="183" id="sie-ke-KK1"/>
                         </constraints>
                     </imageView>
+                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3PM-Jr-F9i">
+                        <rect key="frame" x="8" y="99" width="304" height="2"/>
+                    </progressView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="AcU-ND-Qq3" firstAttribute="centerY" secondItem="Dg4-yB-wzo" secondAttribute="centerY" id="6CD-w9-7ck"/>
@@ -31,6 +34,7 @@
             <connections>
                 <outlet property="imageView" destination="AcU-ND-Qq3" id="fT8-Du-2WJ"/>
                 <outlet property="imgView" destination="AcU-ND-Qq3" id="EZv-am-0yo"/>
+                <outlet property="progressView" destination="3PM-Jr-F9i" id="IqR-Us-QSn"/>
             </connections>
             <point key="canvasLocation" x="346" y="-377.5"/>
         </tableViewCell>

@@ -56,7 +56,7 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
     // -- Reference to storage
     lazy var storageRef = FIRStorage.storage().reference()
     // -- List
-//    var types : Array<AnyObject> = []
+    var isMedia : Array<Bool> = []
     
     private var previousRect = CGRectZero
     var msgs: Array<AnyObject> = []
@@ -68,7 +68,13 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
         var Curve = UInt()
     }
     var keyboard = keyBoard()
-
+    
+    struct Message {
+        var content = String()
+        var uid = String()
+        var isText = Bool()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         messagesRef = ref.child("messages")
@@ -92,15 +98,24 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
             
             // --
             messagesRef.queryOrderedByChild("sender").queryEqualToValue(uid).observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
-                print(snapshot)
+
+                if snapshot.value!["image"] as? String != nil {
+                    self.isMedia.append(true)
+                } else {
+                    self.isMedia.append(false)
+                }
                 self.msgs.append(snapshot)
+                self.ChatTableView.beginUpdates()
                 self.ChatTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.msgs.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+                self.ChatTableView.endUpdates()
             })
             
             messagesRef.queryOrderedByChild("sender").queryEqualToValue(uid).observeEventType(.ChildRemoved, withBlock: { (snapshot) -> Void in
                 let index = self.indexOfMessage(snapshot)
                 self.msgs.removeAtIndex(index)
+                self.ChatTableView.beginUpdates()
                 self.ChatTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+                self.ChatTableView.endUpdates()
             })
             
         }
@@ -127,22 +142,23 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let identifier = "messageCell"
-        var cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as UITableViewCell
         
+//        for subview in cell.contentView.subviews  {
+//            subview.removeFromSuperview()
+//        }
         
-        for subview in cell.contentView.subviews  {
-            subview.removeFromSuperview()
-        }
-        
-        if self.msgs[indexPath.row] is FIRDataSnapshot {
+        if self.isMedia[indexPath.row] == false  {
+            let cell = tableView.dequeueReusableCellWithIdentifier("messageCell", forIndexPath: indexPath) as UITableViewCell
             cell.textLabel?.text = self.msgs[indexPath.row].value!["message"] as? String
             return cell
+        }else{
+            let imageURL = self.msgs[indexPath.row].value!["image"] as? String
+            // MARK: FIX overlapping
+            let imageRef = storageRef.child(imageURL!)
+            let imageCell : ImageCell = tableView.dequeueReusableCellWithIdentifier("cellImage", forIndexPath: indexPath) as! ImageCell
+            imageCell.progressView.progress = 0
+            return imageCell
         }
-            cell = tableView.dequeueReusableCellWithIdentifier("cellImage", forIndexPath: indexPath) as! ImageCell
-            cell.imageView?.image = self.msgs[indexPath.row] as? UIImage
-        
-        return cell
     }
 
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -153,6 +169,19 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
         } else if editingStyle == .Insert {
             // -- Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if self.isMedia[indexPath.row] == true  {
+            return 200
+        }
+        
+        return UITableViewAutomaticDimension
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print(tableView.cellForRowAtIndexPath(indexPath))
     }
 
     func textViewDidBeginEditing(textView: UITextView) {
@@ -175,36 +204,40 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
         
         var uploadTask = FIRStorageUploadTask()
         
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let user = FIRAuth.auth()?.currentUser {
             
-            let imageData = UIImageJPEGRepresentation(image, 0.0)
-            // -- Upload image
-            let imageRef = self.storageRef.child("images/\(Int(NSDate.timeIntervalSinceReferenceDate() * 1000)).jpg")
-            
-            // Upload the file to the path "images/rivers.jpg"
-            uploadTask = imageRef.putData(imageData!, metadata: nil)
-            self.msgs.append(image)
-            self.ChatTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.msgs.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
-            
-            uploadTask.observeStatus(.Progress) { snapshot in
-                // -- Upload reported progress
-                if let progress = snapshot.progress {
-                    let percentComplete = Float(progress.completedUnitCount) / Float(progress.totalUnitCount)
-                    print(percentComplete)
-//                    self.ProgressBar.setProgress(percentComplete, animated: true)
+            if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+                
+                let imageData = UIImageJPEGRepresentation(image, 0.0)
+                // -- Upload image
+                let imageName = "images/\(Int(NSDate.timeIntervalSinceReferenceDate() * 1000)).jpg"
+                let imageRef = self.storageRef.child(imageName)
+                
+                // Upload the file to the path "images/rivers.jpg"
+                uploadTask = imageRef.putData(imageData!, metadata: nil)
+                self.msgs.append(image)
+                self.ChatTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.msgs.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+                
+                uploadTask.observeStatus(.Progress) { snapshot in
+                    // -- Upload reported progress
+                    if let progress = snapshot.progress {
+                        let percentComplete = Float(progress.completedUnitCount) / Float(progress.totalUnitCount)
+                        print(percentComplete)
+    //                    self.ProgressBar.setProgress(percentComplete, animated: true)
+                    }
                 }
-            }
-            
-            uploadTask.observeStatus(.Success) { snapshot in
-                // Upload completed successfully
-                print("success")
-//                self.dbRef.child("posts").child(self.UserId).childByAutoId().setValue(data)
-//                self.performSegueWithIdentifier("BackToProfile", sender: nil)
-            }
-            
-            uploadTask.observeStatus(.Failure) { snapshot in
-                // Upload failed
-                print(snapshot)
+                
+                uploadTask.observeStatus(.Success) { snapshot in
+                    // Upload completed successfully
+                    print("success")
+                    self.ref.child("messages").childByAutoId().setValue(["image": imageName,"sender":user.uid])
+    //                self.performSegueWithIdentifier("BackToProfile", sender: nil)
+                }
+                
+                uploadTask.observeStatus(.Failure) { snapshot in
+                    // Upload failed
+                    print(snapshot)
+                }
             }
         }
         
