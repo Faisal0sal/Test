@@ -68,12 +68,15 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
         var Curve = UInt()
     }
     var keyboard = keyBoard()
-    
+    // -- Message object
     struct Message {
         var content = String()
         var uid = String()
         var isText = Bool()
     }
+    
+    var downloadTasks : Dictionary<Int, FIRStorageDownloadTask> = [:]
+    var taskStatus : Array<FIRStorageTaskSnapshot> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -153,10 +156,48 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
             return cell
         }else{
             let imageURL = self.msgs[indexPath.row].value!["image"] as? String
+            print(imageURL)
             // MARK: FIX overlapping
             let imageRef = storageRef.child(imageURL!)
             let imageCell : ImageCell = tableView.dequeueReusableCellWithIdentifier("cellImage", forIndexPath: indexPath) as! ImageCell
-            imageCell.progressView.progress = 0
+            
+            if let total = downloadTasks[indexPath.row]?.snapshot.progress?.totalUnitCount {
+                
+                let completed = downloadTasks[indexPath.row]?.snapshot.progress?.completedUnitCount
+                print("\(total/completed!)")
+            }else{
+            
+                downloadTasks[indexPath.row] = imageRef.dataWithMaxSize(1 * 1024 * 1024, completion: { (data, error) in
+                    
+                    if error != nil {
+                        
+                        
+                        print(error?.localizedDescription)
+                    }else{
+                        imageCell.progressView.hidden = true
+                        imageCell.imgView.image = UIImage(data: data!)
+                        imageCell.imgView.hidden = false
+                        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+                        print("Success")
+                    }
+                    
+                })
+
+                downloadTasks[indexPath.row]!.observeStatus(.Progress, handler: {(snapshot) in
+                    
+                    if let progress = snapshot.progress {
+                        let percentComplete = Float(progress.completedUnitCount) / Float(progress.totalUnitCount)
+                        print(percentComplete)
+                        imageCell.progressView.setProgress(percentComplete, animated: true)
+                   }
+                })
+                downloadTasks[indexPath.row]?.observeStatus(.Success, handler: { (snapshot) in
+                    
+                    print("snapshot \(snapshot)")
+                    
+                })
+                
+            }
             return imageCell
         }
     }
@@ -181,7 +222,6 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(tableView.cellForRowAtIndexPath(indexPath))
     }
 
     func textViewDidBeginEditing(textView: UITextView) {
