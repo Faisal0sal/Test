@@ -76,6 +76,8 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
     }
     
     var downloadTasks : Dictionary<Int, FIRStorageDownloadTask> = [:]
+    var completed : Dictionary<Int, Bool> = [:]
+    var images : Dictionary<Int, UIImage> = [:]
     var taskStatus : Array<FIRStorageTaskSnapshot> = []
     
     override func viewDidLoad() {
@@ -151,53 +153,54 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
 //        }
         
         if self.isMedia[indexPath.row] == false  {
-            let cell = tableView.dequeueReusableCellWithIdentifier("messageCell", forIndexPath: indexPath) as UITableViewCell
+            let cell: UITableViewCell! = tableView.dequeueReusableCellWithIdentifier("messageCell", forIndexPath: indexPath)
             cell.textLabel?.text = self.msgs[indexPath.row].value!["message"] as? String
             return cell
         }else{
+            
+            let imageCell : ImageCell = tableView.dequeueReusableCellWithIdentifier("cellImage", forIndexPath: indexPath) as! ImageCell
+            
+            if (completed[indexPath.row] == nil) {
+                
             let imageURL = self.msgs[indexPath.row].value!["image"] as? String
             print(imageURL)
             // MARK: FIX overlapping
             let imageRef = storageRef.child(imageURL!)
-            let imageCell : ImageCell = tableView.dequeueReusableCellWithIdentifier("cellImage", forIndexPath: indexPath) as! ImageCell
-            
-            if let total = downloadTasks[indexPath.row]?.snapshot.progress?.totalUnitCount {
-                
-                let completed = downloadTasks[indexPath.row]?.snapshot.progress?.completedUnitCount
-                print("\(total/completed!)")
-            }else{
-            
-                downloadTasks[indexPath.row] = imageRef.dataWithMaxSize(1 * 1024 * 1024, completion: { (data, error) in
+                downloadTasks[indexPath.row] = imageRef.dataWithMaxSize(INT64_MAX, completion: { (data, error) in
                     
                     if error != nil {
                         
-                        
                         print(error?.localizedDescription)
                     }else{
-                        imageCell.progressView.hidden = true
-                        imageCell.imgView.image = UIImage(data: data!)
-                        imageCell.imgView.hidden = false
-                        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+                        self.images[indexPath.row] = UIImage.init(data: data!)
+                        self.completed[indexPath.row] = true
                         print("Success")
+                        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
                     }
-                    
                 })
-
+//
                 downloadTasks[indexPath.row]!.observeStatus(.Progress, handler: {(snapshot) in
-                    
+//
                     if let progress = snapshot.progress {
                         let percentComplete = Float(progress.completedUnitCount) / Float(progress.totalUnitCount)
                         print(percentComplete)
                         imageCell.progressView.setProgress(percentComplete, animated: true)
                    }
                 })
-                downloadTasks[indexPath.row]?.observeStatus(.Success, handler: { (snapshot) in
+            }else{
+                if imageCell.imageView?.image == nil {
+
+                    if imageCell.progressView != nil {
+                        imageCell.progressView.removeFromSuperview()
+                    }
+
+                    imageCell.imgView.hidden = false
+                    imageCell.imgView.image = self.images[indexPath.row]
+                    tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
                     
-                    print("snapshot \(snapshot)")
-                    
-                })
-                
+                }
             }
+            
             return imageCell
         }
     }
