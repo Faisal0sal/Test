@@ -188,7 +188,7 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
                    }
                 })
             }else{
-                if imageCell.imageView?.image == nil {
+//                if imageCell.imageView?.image == nil {
 
                     if imageCell.progressView != nil {
                         imageCell.progressView.removeFromSuperview()
@@ -196,9 +196,8 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
 
                     imageCell.imgView.hidden = false
                     imageCell.imgView.image = self.images[indexPath.row]
-                    tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
                     
-                }
+//                }
             }
             
             return imageCell

@@ -7,11 +7,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="cellImage" id="ecG-W2-Brx" customClass="ImageCell" customModule="Test" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="199"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="cellImage" id="ecG-W2-Brx" customClass="ImageCell" customModule="Test" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
             <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" tableViewCell="ecG-W2-Brx" id="Dg4-yB-wzo">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="198.5"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" tableViewCell="ecG-W2-Brx" id="Dg4-yB-wzo">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="199.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AcU-ND-Qq3">
@@ -35,7 +35,6 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="imageView" destination="AcU-ND-Qq3" id="fT8-Du-2WJ"/>
                 <outlet property="imgView" destination="AcU-ND-Qq3" id="EZv-am-0yo"/>
                 <outlet property="progressView" destination="3PM-Jr-F9i" id="IqR-Us-QSn"/>
             </connections>
