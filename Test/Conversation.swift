@@ -164,7 +164,7 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
                 
             let imageURL = self.msgs[indexPath.row].value!["image"] as? String
             print(imageURL)
-            // MARK: FIX overlapping
+                
             let imageRef = storageRef.child(imageURL!)
                 downloadTasks[indexPath.row] = imageRef.dataWithMaxSize(INT64_MAX, completion: { (data, error) in
                     
@@ -178,9 +178,9 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
                         tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
                     }
                 })
-//
+                
                 downloadTasks[indexPath.row]!.observeStatus(.Progress, handler: {(snapshot) in
-//
+                    
                     if let progress = snapshot.progress {
                         let percentComplete = Float(progress.completedUnitCount) / Float(progress.totalUnitCount)
                         print(percentComplete)
@@ -188,16 +188,12 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
                    }
                 })
             }else{
-//                if imageCell.imageView?.image == nil {
-
                     if imageCell.progressView != nil {
                         imageCell.progressView.removeFromSuperview()
                     }
 
                     imageCell.imgView.hidden = false
                     imageCell.imgView.image = self.images[indexPath.row]
-                    
-//                }
             }
             
             return imageCell
@@ -257,8 +253,9 @@ class Conversation: UIViewController, UIImagePickerControllerDelegate, UINavigat
                 
                 // Upload the file to the path "images/rivers.jpg"
                 uploadTask = imageRef.putData(imageData!, metadata: nil)
-                self.msgs.append(image)
-                self.ChatTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.msgs.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+//                self.msgs.append(image)
+//                let index = [NSIndexPath(forRow: self.msgs.count-1, inSection: 0)]
+//                self.ChatTableView.insertRowsAtIndexPaths(index, withRowAnimation: UITableViewRowAnimation.Automatic)
                 
                 uploadTask.observeStatus(.Progress) { snapshot in
                     // -- Upload reported progress
